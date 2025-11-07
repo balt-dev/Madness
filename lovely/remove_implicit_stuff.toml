@@ -1,0 +1,47 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.name == 'Credit Card' then
+            G.GAME.bankrupt_at = G.GAME.bankrupt_at - self.ability.extra
+        end'''
+position = "before"
+payload = '''--[['''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.name == 'Credit Card' then
+            G.GAME.bankrupt_at = G.GAME.bankrupt_at + self.ability.extra
+        end'''
+position = "before"
+payload = '''--[['''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.name == 'Stuntman' then
+            G.hand:change_size(-self.ability.extra.h_size)
+        end'''
+position = "after"
+payload = ''']]'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.name == 'Stuntman' then
+            G.hand:change_size(self.ability.extra.h_size)
+        end'''
+position = "after"
+payload = ''']]'''
+match_indent = true
+times = 1
