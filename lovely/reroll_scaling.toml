@@ -1,0 +1,22 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "if not skip_increment then G.GAME.current_round.reroll_cost_increase = G.GAME.current_round.reroll_cost_increase + 1 end"
+position = "at"
+payload = '''
+local context = { reroll_scaling = true, reroll_increase = 1 }
+
+for i, card in ipairs(G.jokers.cards) do
+    if not card.debuff then
+        eval_card(card, context)
+    end
+end
+
+if not skip_increment then G.GAME.current_round.reroll_cost_increase = G.GAME.current_round.reroll_cost_increase + context.reroll_increase end
+'''
+match_indent = true
+times = 1

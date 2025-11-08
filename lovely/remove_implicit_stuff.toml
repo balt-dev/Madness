@@ -45,3 +45,102 @@ position = "after"
 payload = ''']]'''
 match_indent = true
 times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.name == 'Loyalty Card' then
+                            self.ability.loyalty_remaining = (self.ability.extra.every-1-(G.GAME.hands_played - self.ability.hands_played_at_create))%(self.ability.extra.every+1)'''
+position = "before"
+payload = '''--[['''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.name == 'Caino' and self.ability.caino_xmult > 1 then 
+                            return {
+                                message = localize{type='variable',key='a_xmult',vars={self.ability.caino_xmult}},
+                                Xmult_mod = self.ability.caino_xmult
+                            }
+                        end'''
+position = "after"
+payload = ''']]'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''elseif self.ability.name == 'Misprint' then
+            local r_mults = {}'''
+position = "before"
+payload = '''--[['''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''colours = {G.C.UI.TEXT_DARK},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.2011, scale = 0.32, min_cycle_time = 0})}},
+            }'''
+position = "after"
+payload = '''--]]'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''elseif self.ability.name == 'Gros Michel' then loc_vars = {self.ability.extra.mult, SMODS.get_probability_vars(self, 1, self.ability.extra.odds, 'gros_michel')}'''
+position = "at"
+payload = '''elseif self.ability.name == 'Gros Michel' then -- Removed by Madness'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''colours = {G.C.UI.TEXT_DARK},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.2011, scale = 0.32, min_cycle_time = 0})}},
+            }'''
+position = "after"
+payload = '''--]]'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''elseif context.setting_blind and not self.getting_sliced then'''
+position = "after"
+payload = '''--[['''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''elseif context.destroying_card and not context.blueprint then'''
+position = "before"
+payload = '''--]]'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''elseif self.ability.name == 'Raised Fist' then'''
+position = "at"
+payload = '''elseif self.ability.name == 'Raised Fist' then loc_vars = {self.ability.extra.mult}'''
+times = 1
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.name == 'Gros Michel' or self.ability.name == 'Cavendish' then'''
+position = "at"
+payload = '''if false and self.ability.name == 'Gros Michel' or self.ability.name == 'Cavendish' then'''
+times = 1
+match_indent = true
