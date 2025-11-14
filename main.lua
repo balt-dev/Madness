@@ -17,10 +17,10 @@ function MADNESS.load_module(mod)
 		path_prefix = MADNESS.current_module .. "/"
 	end
 	if NFS.getInfo(MADNESS.mod_path .. "/" .. path_prefix .. mod .. "/mod.lua") ~= nil then
-		print("[] Loading module " .. path_prefix .. mod .. "/mod.lua...")
+		print("[MADNESS] Loading module " .. path_prefix .. mod .. "/mod.lua...")
 		f, err = SMODS.load_file(path_prefix .. mod .. "/mod.lua")
 	else
-		print("[] Loading module " .. path_prefix .. mod .. ".lua...")
+		print("[MADNESS] Loading module " .. path_prefix .. mod .. ".lua...")
 		f, err = SMODS.load_file(path_prefix .. mod .. ".lua")
 	end
 	if err then error(err) end

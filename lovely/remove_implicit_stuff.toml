@@ -1,6 +1,6 @@
 [manifest]
 version = "1.0.0"
-priority = 0
+priority = 1999999999
 
 [[patches]]
 [patches.pattern]
@@ -49,8 +49,7 @@ times = 1
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = '''if self.ability.name == 'Loyalty Card' then
-                            self.ability.loyalty_remaining = (self.ability.extra.every-1-(G.GAME.hands_played - self.ability.hands_played_at_create))%(self.ability.extra.every+1)'''
+pattern = '''if self.ability.name == 'Spare Trousers' and (next(context.poker_hands['Two Pair']) or next(context.poker_hands['Full House'])) and not context.blueprint then'''
 position = "before"
 payload = '''--[['''
 match_indent = true
@@ -60,6 +59,20 @@ times = 1
 [patches.pattern]
 target = "card.lua"
 pattern = '''if self.ability.name == 'Caino' and self.ability.caino_xmult > 1 then 
+                            return {
+                                message = localize{type='variable',key='a_xmult',vars={self.ability.caino_xmult}},
+                                Xmult_mod = self.ability.caino_xmult
+                            }
+                        end'''
+position = "after"
+payload = ''']]'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.name == 'Caino' and to_big(self.ability.caino_xmult) > to_big(1) then
                             return {
                                 message = localize{type='variable',key='a_xmult',vars={self.ability.caino_xmult}},
                                 Xmult_mod = self.ability.caino_xmult
@@ -141,6 +154,15 @@ match_indent = true
 target = "card.lua"
 pattern = '''if self.ability.name == 'Gros Michel' or self.ability.name == 'Cavendish' then'''
 position = "at"
-payload = '''if false and self.ability.name == 'Gros Michel' or self.ability.name == 'Cavendish' then'''
+payload = '''if false then'''
+times = 1
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.name == 'Ride the Bus' and not context.blueprint then'''
+position = "at"
+payload = '''if false then'''
 times = 1
 match_indent = true

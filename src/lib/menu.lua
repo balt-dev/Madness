@@ -17,7 +17,6 @@ Game.main_menu = function(change_context)
 
     newcard.T.w = newcard.T.w * 1.1 * 1.2
     newcard.T.h = newcard.T.h * 1.1 * 1.2
-    newcard.no_ui = true
     newcard.states.visible = false
 
         G.SPLASH_BACK:define_draw_steps({

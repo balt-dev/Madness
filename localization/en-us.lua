@@ -53,6 +53,16 @@ return {
                     "at end of round",
                 },
             },
+            j_ceremonial={
+                name="Ceremonial Dagger",
+                text={
+                    "When {C:attention}Blind{} is selected,",
+                    "destroy Joker to the right",
+                    "and permanently add {C:attention}X#1#",
+                    "its sell value to this {C:red}Mult",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+                },
+            },
             j_banner={
                 name="Banner",
                 text={
@@ -145,6 +155,184 @@ return {
                     "Played {C:attention}face{} cards have",
                     "a {C:green}#1# in #2#{} chance to",
                     "give {C:money}$#3#{} when scored",
+                },
+            },
+            j_ride_the_bus={
+                name="Ride the Bus",
+                text={
+                    "This Joker gains {X:mult,C:white}X#1#{} Mult",
+                    "per {C:attention}consecutive{} hand",
+                    "played without a",
+                    "scoring {C:attention}face{} card",
+                    "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+                },
+            },
+            j_space={
+                name="Space Joker",
+                text={
+                    "Upgrade the level of",
+                    "the first {C:attention}played",
+                    "poker hand each round",
+                },
+            },
+            j_burglar={
+                name="Burglar",
+                text={
+                    "When {C:attention}Blind{} is selected,",
+                    "gain {C:blue}+#1#{} Hands and",
+                    "{C:attention}lose all but one discard",
+                },
+            },
+            j_blackboard={
+                name="Blackboard",
+                text={
+                    "{X:red,C:white} X#1# {} Mult if",
+                    "all scoring cards",
+                    "are {C:spades}#2#{} or {C:clubs}#3#{}",
+                },
+            },
+            j_runner={
+                name="Runner",
+                text={
+                    "Gains {C:chips}+#2#{} Chips",
+                    "if played hand has",
+                    "less than {C:attention}five cards{}",
+                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+                },
+            },
+            j_runner={
+                name="Runner",
+                text={
+                    "Gains {C:chips}+#2#{} Chips",
+                    "if played hand has",
+                    "less than {C:attention}five cards{}",
+                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+                },
+            },
+            j_dna={
+                name="DNA",
+                text={
+                    "If {C:attention}first hand{} of round",
+                    "has only {C:attention}1{} card,",
+                    "add a permanent copy to deck",
+                    "and draw both cards to {C:attention}hand",
+                },
+            },
+            j_blue_joker={
+                name="Blue Joker",
+                text={
+                    "{C:chips}+#1#{} Chips for each",
+                    "card in your {C:attention}full deck",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+                },
+            },
+            j_sixth_sense = {
+                name = "Sixth Sense",
+                text = {
+                    "If {C:attention}first hand{} of round has",
+                    "any {C:attention}6{}'es, destroy each one and",
+                    "create a {C:spectral}Spectral{} card for each",
+                    "{C:inactive}(Must have room)",
+                },
+            },
+            j_hiker = {
+                name = "Hiker",
+                text = {
+                    "Every played {C:attention}card{}",
+                    "permanently gains",
+                    "{C:mult}+#1#{} Mult when scored",
+                },
+            },
+            j_faceless = {
+                name = "Faceless Joker",
+                text = {
+                    "Earn {C:attention}$#1#{} when",
+                    "discarding a {C:attention}face card",
+                },
+            },
+            j_superposition = {
+                name = "Superposition",
+                text = {
+                    "Create a {C:spectral}Spectral{} card if",
+                    "poker hand contains an",
+                    "{C:attention}Ace{} and a {C:attention}Straight{}",
+                    "{C:inactive}(Must have room)",
+                },
+            },
+            j_todo_list={
+                name="To Do List",
+                text={
+                    "Earn {C:money}$#1#{} if {C:attention}poker hand{}",
+                    "contains a {C:attention}#2#{},",
+                    "poker hand changes",
+                    "at end of round",
+                },
+            },
+            j_red_card={
+                name="Red Card",
+                text={
+                    "This Joker gains",
+                    "{X:red,C:white}X#1#{} Mult when any",
+                    "{C:attention}Booster Pack{} is skipped",
+                    "{C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult)",
+                },
+            },
+            j_madness={
+                name="Madness",
+                text={
+                    "When {C:attention}Small Blind{} or {C:attention}Big Blind{}",
+                    "is selected, {C:attention}destroy{} a random Joker",
+                    "and gain {C:attention}X#1#{} its sell value as {X:mult,C:white} XMult {} ",
+                    "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
+                },
+            },
+            j_square={
+                name="Square Joker",
+                text={
+                    "This Joker gains {C:chips}+#2#{} Chips",
+                    "if played hand has",
+                    "exactly {C:attention}4{} cards",
+                    "{C:inactive}(Currently {C:chips}#1#{C:inactive} Chips)",
+                },
+            },
+            j_seance={
+                name="Séance",
+                text={
+                    "If {C:attention}poker hand{} is a",
+                    "{C:attention}#1#{}, turn two random",
+                    "played cards {C:dark_edition}Negative{}",
+                },
+            },
+            j_riff_raff={
+                name="Riff-Raff",
+                text={
+                    "When {C:attention}Blind{} is selected,",
+                    "fill all empty {C:attention}Joker{} slots",
+                    "with {C:blue}Common{C:attention} Jokers",
+                },
+            },
+            j_cloud_9={
+                name="Cloud 9",
+                text={
+                    "Each played {C:attention}9{} gives",
+                    "{C:attention}$#1#{} when scored",
+                },
+            },
+            j_rocket={
+                name="Rocket",
+                text={
+                    "Earn {C:money}$#1#{} at end of round",
+                    "Payout increases by {C:money}$#2#{}",
+                    "when {C:attention}Blind{} is defeated",
+                },
+            },
+            j_obelisk={
+                name="Obelisk",
+                text={
+                    "This Joker gains {X:mult,C:white} X#1# {} Mult per hand played",
+                    "Reset {C:red}XMult{} and {C:attention}round score{}",
+                    "when playing most played {C:attention}poker hand",
+                    "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
                 },
             },
         },

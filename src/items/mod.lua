@@ -7,3 +7,7 @@ MADNESS.load_module "tarots"
 MADNESS.load_module "spectrals"
 MADNESS.load_module "seals"
 MADNESS.load_module "misc"
+
+if Balatest then
+	MADNESS.load_module "tests"
+end
