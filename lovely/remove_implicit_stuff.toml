@@ -166,3 +166,21 @@ position = "at"
 payload = '''if false then'''
 times = 1
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''elseif context.discard then'''
+position = "after"
+payload = '''--[['''
+times = 1
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''elseif context.end_of_round then'''
+position = "before"
+payload = ''']]'''
+times = 1
+match_indent = true

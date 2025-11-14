@@ -451,7 +451,7 @@ SMODS.Joker:take_ownership('abstract', {
 })
 
 SMODS.Joker:take_ownership('delayed_grat', {
-    config = { extra = 3 },
+    config = { extra = 7 },
 })
 
 SMODS.Joker:take_ownership('hack', {
@@ -560,9 +560,27 @@ SMODS.Joker:take_ownership('business', {
     end,
 })
 
---[[ SMODS.Joker:take_ownership('supernova', {
-    what do i do?
-}) ]]
+SMODS.Joker:take_ownership('supernova', {
+    loc_vars = function(self, info_queue, card)
+        local mult = 0
+        if  
+            G and G.GAME and G.GAME.current_round and G.GAME.current_round.current_hand 
+            and G.GAME.current_round.current_hand.handname
+            and G.GAME.hands[G.GAME.current_round.current_hand.handname]
+        then
+            local hand = G.GAME.current_round.current_hand.handname
+            mult = (G.GAME.hands[hand].played + 1) * G.GAME.hands[hand].level
+        end
+        return { vars = { mult } }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                mult = G.GAME.hands[context.scoring_name].played * G.GAME.hands[context.scoring_name].level
+            }
+        end
+    end
+})
 
 SMODS.Joker:take_ownership('ride_the_bus', {
     rarity = 2,
@@ -1304,6 +1322,67 @@ SMODS.Joker:take_ownership('obelisk', {
     end,
 })
 
+SMODS.Joker:take_ownership('midas_mask', {
+    config = { extra = { odds = 2 } },
+    loc_vars = function(self, info_queue, card)
+        local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds,
+            'midas_mask')
+        return { vars = { numerator, denominator } }
+    end,
+    calculate = function(self, card, context)
+        if context.before and not context.blueprint then
+            local cards = 0
+            for _, scored_card in ipairs(context.scoring_hand) do
+                if not scored_card.midas_flag then
+                    scored_card.midas_flag = true
+                    if SMODS.pseudorandom_probability(card, 'midas_mask', 1, card.ability.extra.odds) then
+                        cards = cards + 1
+                        scored_card:set_ability('m_gold', nil, true)
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                scored_card:juice_up()
+                                return true
+                            end
+                        }))
+                    end
+                end
+            end
+            if cards > 0 then
+                return {
+                    message = localize('k_gold'),
+                    colour = G.C.MONEY
+                }
+            end
+        end
+        if context.joker_main then
+            for i, card in ipairs(G.playing_cards) do
+                card.midas_flag = nil
+            end
+        end
+    end
+})
+
+SMODS.Joker:take_ownership('photograph', {
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and context.other_card:is_face() then
+            return {
+                xmult = card.ability.extra
+            }
+        end
+    end
+})
+
+SMODS.Joker:take_ownership('gift_card', {
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and context.other_card:is_face() then
+            return {
+                xmult = card.ability.extra
+            }
+        end
+    end
+})
+
+
 -- Fix these getting yote by lovely patch
 
 SMODS.Joker:take_ownership('stencil', {
@@ -1328,14 +1407,4 @@ SMODS.Joker:take_ownership('oops', {
 			G.GAME.probabilities[k] = v/2
 		end
 	end
-}, true)
-
-SMODS.Joker:take_ownership('supernova', {
-    calculate = function(self, card, context)
-        if context.joker_main then
-            return {
-                mult = G.GAME.hands[context.scoring_name].played
-            }
-        end
-    end
 }, true)

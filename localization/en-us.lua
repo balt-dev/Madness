@@ -157,6 +157,15 @@ return {
                     "give {C:money}$#3#{} when scored",
                 },
             },
+            j_supernova = {
+                name = "Supernova",
+                text = {
+                    "Adds the number of times",
+                    "played {C:attention}poker hand{} has been",
+                    "played, times its {C:attention}level{}, to {C:red}Mult",
+                    "{C:inactive}(Currently {C:red}+#1#{C:inactive} Mult)",
+                },
+            },
             j_ride_the_bus={
                 name="Ride the Bus",
                 text={
@@ -335,11 +344,39 @@ return {
                     "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
                 },
             },
+            j_midas_mask = {
+                name = "Midas Mask",
+                text = {
+                    "Played cards",
+                    "have a {C:green}#1# in #2#{} chance",
+                    "to become {C:attention}Gold{} cards",
+                    "when scored",
+                },
+            },  
+            j_photograph = {
+                name = "Photograph",
+                text = {
+                    "Played {C:attention}face{} cards",
+                    "give {X:mult,C:white} X#1# {} Mult",
+                    "when scored",
+                },
+            },
         },
     },
     misc={
         dictionary={
 			k_activated="Activated!",
+            madness_overscoring="Overscoring Adjustment",
+            madness_overscoring_explain={
+                "If scoring goes above the base Blind requirement",
+                "of {C:attention}3 Antes after{} the current Ante,",
+                "add the difference to the {C:green}Overscoring Ante{}.",
+                "The {C:attention}next Ante{} will have a base Blind requirement",
+                "{C:attention}larger{} than the score that triggered overscoring.",
+                "This is best used with other mods that add",
+                "more unbalanced additions to the game."
+            },
+            k_madness_overscoring="Overscore Ante"
         }
     },
 }

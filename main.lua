@@ -28,7 +28,7 @@ function MADNESS.load_module(mod)
 	MADNESS.current_module = path_prefix .. mod
 	local res = f()
 	MADNESS.current_module = old_mod
-	print("[] Loaded module " .. path_prefix .. mod)
+	print("[MADNESS] Loaded module " .. path_prefix .. mod)
 	return res
 end
 

@@ -268,3 +268,22 @@ Balatest.TestPlay {
     end,
     no_autostart = true
 }
+
+
+Balatest.TestPlay {
+    name = "overscoring",
+    jokers = { 'j_baron', 'j_mime' },
+    hand_size = 10,
+    deck = { cards = {{r='K',s='S'},{r='K',s='S'},{r='K',s='S'},{r='K',s='S'},{r='K',s='S'},{r='K',s='S'},{r='K',s='S'},{r='K',s='S'},{r='K',s='S'},{r='K',s='S'}}},
+    execute = function()
+        Balatest.assert(MADNESS.config.overscoring, "Overscoring has to be enabled to test overscoring")
+        Balatest.play_hand { 'KS' }
+        Balatest.cash_out()
+        Balatest.exit_shop()
+        Balatest.start_round()
+        Balatest.play_hand { 'KS' }
+    end,
+    assert = function()
+        Balatest.assert_eq(G.GAME.overscoring_ante, 0)
+    end,
+}

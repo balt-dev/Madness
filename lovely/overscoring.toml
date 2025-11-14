@@ -1,0 +1,91 @@
+[manifest]
+version = "1.0.0"
+priority = 999999999
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = """{n=G.UIT.C, config={align = "cm", padding = 0.05, minw = 1.45*2 + spacing, minh = 1.15, colour = temp_col, emboss = 0.05, r = 0.1}, nodes={"""
+position = "at"
+payload = """{n=G.UIT.C, config={align = "cm", padding = 0.05, minw = 1.45*2 + spacing, minh = (MADNESS.config.overscoring and 0.9) or 1.15, colour = temp_col, emboss = 0.05, r = 0.1}, nodes={"""
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = """{n=G.UIT.R, config={align = "cm"}, nodes={
+              {n=G.UIT.C, config={id = 'hud_ante',align = "cm", padding = 0.05, minw = 1.45, minh = 1, colour = temp_col, emboss = 0.05, r = 0.1}, nodes={
+                {n=G.UIT.R, config={align = "cm", minh = 0.33, maxw = 1.35}, nodes={
+                  {n=G.UIT.T, config={text = localize('k_ante'), scale = 0.85*scale, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
+                }},
+                {n=G.UIT.R, config={align = "cm", r = 0.1, minw = 1.2, colour = temp_col2}, nodes={
+                  {n=G.UIT.O, config={object = DynaText({string = {{ref_table = G.GAME.round_resets, ref_value = 'ante_disp'}}, colours = {G.C.IMPORTANT},shadow = true, font = G.LANGUAGES['en-us'].font, scale = scale_number(G.GAME.round_resets.ante, 2*scale, 100)}),id = 'ante_UI_count'}},--{n=G.UIT.T, config={text = number_format(G.GAME.round_resets.ante), lang = G.LANGUAGES['en-us'], scale = scale_number(G.GAME.round_resets.ante, 2*scale, 100), colour = G.C.IMPORTANT, shadow = true,id = 'ante_UI_count'}},
+                  {n=G.UIT.T, config={text = " ", scale = 0.3*scale}},
+                  {n=G.UIT.T, config={text = "/ ", scale = 0.7*scale, colour = G.C.WHITE, shadow = true}},
+                  {n=G.UIT.T, config={ref_table = G.GAME, ref_value='win_ante', scale = scale, colour = G.C.WHITE, shadow = true}}
+                }},
+              }},
+              {n=G.UIT.C, config={minw = spacing},nodes={}},
+              {n=G.UIT.C, config={align = "cm", padding = 0.05, minw = 1.45, minh = 1, colour = temp_col, emboss = 0.05, r = 0.1}, nodes={
+                {n=G.UIT.R, config={align = "cm", maxw = 1.35}, nodes={
+                  {n=G.UIT.T, config={text = localize('k_round'), minh = 0.33, scale = 0.85*scale, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
+                }},
+                {n=G.UIT.R, config={align = "cm", r = 0.1, minw = 1.2, colour = temp_col2, id = 'row_round_text'}, nodes={
+                  {n=G.UIT.O, config={object = DynaText({string = {{ref_table = G.GAME, ref_value = 'round'}}, colours = {G.C.IMPORTANT},shadow = true, scale = 2*scale}),id = 'round_UI_count'}},
+                }},
+              }},
+            }},"""
+position = "after"
+payload = """
+(MADNESS.config.overscoring and {n=G.UIT.R, config={minh = spacing/2},nodes={}}) or nil,
+(MADNESS.config.overscoring and {n=G.UIT.R, config={align = "cm"}, nodes={
+	{n=G.UIT.C, config={align = "cm", padding = 0.05, minh = 0.5, maxw=1.45*2 + spacing, colour = temp_col, emboss = 0.05, r = 0.1}, nodes={
+		{n=G.UIT.C, config={align = "cm"}, nodes={
+            {n=G.UIT.R, config={align = "cm", minh = 0.4}, nodes={
+              {n=G.UIT.T, config={text = localize('k_madness_overscoring'), maxw=1.4*2 + spacing, scale = 0.7*scale, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
+            }},
+            {n=G.UIT.R, config={minw = spacing},nodes={}},
+			{n=G.UIT.R, config={align = "cm", r = 0.1, minw = 1.35*2 + spacing, minh = 0.4, colour = temp_col2}, nodes={
+				{n=G.UIT.O, config={object = DynaText({
+					string = {{ref_table = G.GAME, ref_value = 'overscoring_ante', prefix = '+'}},
+					colours = {G.C.GREEN}, font = G.LANGUAGES['en-us'].font, shadow = true,
+					spacing = 2, bump = true, scale = scale
+				}), id = 'madness_overscoring_dyna'}}
+			}},
+		}},
+	}},
+}}) or nil,
+"""
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """
+for _,v in ipairs(SMODS.get_card_areas('playing_cards', 'end_of_round')) do
+	SMODS.calculate_end_of_round_effects({ cardarea = v, end_of_round = true, beat_boss = G.GAME.blind.boss })
+end
+"""
+position = "after"
+payload = """
+MADNESS.overscoring_hook(G.GAME.chips)
+"""
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "main.lua"
+pattern = """
+        if ante < 1 then return to_big(100) end
+        if ante <= 8 then return amounts[ante] end
+"""
+position = "at"
+payload = """
+        if to_big(ante) < to_big(1) then return to_big(100) end
+        if to_big(ante) <= to_big(8) then return amounts[ante] end
+"""
+match_indent = true
+times = 3
