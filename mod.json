@@ -2,7 +2,7 @@
 	"id": "madness",
 	"name": "Madness",
 	"author": ["baltdev"],
-	"description": "Brings the absurd lack of balance from mods like Cryptid or Mayhem to vanilla items.",
+	"description": "Brings the absurd lack of balance from mods like Cryptid or Mayhem to vanilla jokers.",
 	"prefix": "madness",
 	"main_file": "main.lua",
 	"badge_colour": "ff0000",
