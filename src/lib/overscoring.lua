@@ -1,4 +1,17 @@
 local blind_amt = get_blind_amount
+-- Patch to prevent shit breaking
+function get_blind_amount(ante)
+	if type(ante) == "table" and ante <= to_big(10) then
+		ante = ante:to_number()
+	end
+	return blind_amt(ante)
+end
+
+local blind_amt = get_blind_amount
+MADNESS.orig_get_blind_amount = blind_amt
+function get_blind_amount(ante)
+	return blind_amt(ante + (G.GAME.overscoring_ante or 0))
+end
 
 function get_blind_amount(ante)
 	G.GAME.overscoring_ante = G.GAME.overscoring_ante or 0
@@ -12,9 +25,13 @@ end
 
 if not to_big then function to_big(x) return x end end
 
-function get_inverse_blind_amount(score)
-	local score = to_big(score) / to_big(blind_amt(8))
-
+function get_inverse_blind_amount(raw_score)
+	local score = to_big(raw_score) / to_big(blind_amt(8))
+	if score < to_big(1) then
+		for i = 0, 8 do
+			if raw_score < blind_amt(i + G.GAME.overscoring_ante) then return to_big(i - 1) end
+		end
+	end
 	if score < to_big(2.3) then
 		return math.floor(1.148 * (math.log(score) ^ 0.752)) + 8
 	elseif score < to_big(50) then
@@ -68,9 +85,9 @@ end
 function MADNESS.overscoring_hook(scored_chips)
 	if not MADNESS.config.overscoring then return end
 	local target_ante = get_inverse_blind_amount(scored_chips)
-	print("Scored: ", scored_chips)
-	print("Need to beat: ", blind_amt(G.GAME.round_resets.ante + G.GAME.overscoring_ante + 3))
-	if to_big(target_ante) >= to_big(G.GAME.round_resets.ante + G.GAME.overscoring_ante + 3) then
-		MADNESS.ease_overscoring(to_big(target_ante) - to_big(G.GAME.round_resets.ante + G.GAME.overscoring_ante))
+	local effective_ante = G.GAME.round_resets.ante + G.GAME.overscoring_ante
+	local overscore_ante = effective_ante + MADNESS.config.overscore_threshold
+	if to_big(target_ante) >= to_big(overscore_ante) then
+		MADNESS.ease_overscoring(to_big(target_ante) - to_big(effective_ante))
 	end
 end

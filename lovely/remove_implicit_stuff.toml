@@ -115,6 +115,15 @@ times = 1
 [[patches]]
 [patches.pattern]
 target = "card.lua"
+pattern = '''elseif self.ability.name == 'Erosion' then loc_vars = {self.ability.extra, math.max(0,self.ability.extra*(G.playing_cards and (G.GAME.starting_deck_size - #G.playing_cards) or 0)), G.GAME.starting_deck_size}'''
+position = "at"
+payload = '''elseif self.ability.name == 'Erosion' then -- Removed by Madness'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
 pattern = '''colours = {G.C.UI.TEXT_DARK},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.2011, scale = 0.32, min_cycle_time = 0})}},
             }'''
 position = "after"

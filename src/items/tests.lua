@@ -235,31 +235,35 @@ Balatest.TestPlay {
 Balatest.TestPlay {
     name = "madness",
     jokers = { 'j_madness', 'j_blueprint' },
+    hand_size = 7,
     execute = function()
     end,
     assert = function()
         Balatest.assert_eq(#G.jokers.cards, 1)
-        Balatest.assert_eq(G.jokers.cards[1].ability.extra.xmult, G.jokers.cards[1].ability.extra.xmult_gain * 5)
+        Balatest.assert_eq(G.jokers.cards[1].ability.extra.xmult, G.jokers.cards[1].ability.extra.xmult_gain * 5 + 1)
     end
 }
 
 Balatest.TestPlay {
     name = "madness_eternal",
     jokers = { 'j_madness', 'j_blueprint' },
+    hand_size = 7,
     execute = function()
-        G.jokers.cards[2].eternal = true
+        Balatest.q(function() G.jokers.cards[2].ability.eternal = true end)
+        Balatest.wait()
         Balatest.start_round()
     end,
     assert = function()
         Balatest.assert_eq(#G.jokers.cards, 2)
-        Balatest.assert_eq(G.jokers.cards[1].ability.extra.xmult, G.jokers.cards[1].ability.extra.xmult_gain * 5)
+        Balatest.assert_eq(G.jokers.cards[1].ability.extra.xmult, G.jokers.cards[1].ability.extra.xmult_gain * 5 + 1)
     end,
-    no_autostart = true
+    no_auto_start = true
 }
 
 Balatest.TestPlay {
     name = "riffraff",
     jokers = { 'j_riff_raff' },
+    hand_size = 7,
     execute = function()
         Balatest.start_round()
     end,
@@ -284,6 +288,6 @@ Balatest.TestPlay {
         Balatest.play_hand { 'KS' }
     end,
     assert = function()
-        Balatest.assert_eq(G.GAME.overscoring_ante, 0)
+        Balatest.assert_eq(G.GAME.overscoring_ante, 9)
     end,
 }

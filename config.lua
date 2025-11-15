@@ -1,3 +1,4 @@
 return {
-	overscoring = true
+	overscoring = true,
+	overscore_threshold = 4
 }

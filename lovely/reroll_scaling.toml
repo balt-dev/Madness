@@ -20,3 +20,12 @@ if not skip_increment then G.GAME.current_round.reroll_cost_increase = G.GAME.cu
 '''
 match_indent = true
 times = 1
+
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = "inc_career_stat('c_shop_rerolls', 1)"
+position = "after"
+payload = "G.GAME.reroll_tally = (G.GAME.reroll_tally or 0) + 1"
+match_indent = true
+times = 1

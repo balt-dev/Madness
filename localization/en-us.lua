@@ -361,22 +361,85 @@ return {
                     "when scored",
                 },
             },
-        },
+            j_erosion = {
+                name = "Erosion",
+                text = {
+                    "This Joker gains {X:mult,C:white} X#1# {} Mult",
+                    "every time a {C:attention}playing card{}",
+                    "is removed from your deck",
+                    "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
+                },
+            },
+            j_reserved_parking = {
+                name = "Reserved Parking",
+                text = {
+                    "Each {C:attention}face{} card",
+                    "held in hand",
+                    "gives {C:money}$#1#{}",
+                },
+            },
+            j_to_the_moon = {
+                name = "To The Moon",
+                text = {
+                    "At end of round,",
+                    "earn {C:money}$#1#{} for every",
+                    "{C:money}$#2#{} you have",
+                    "{C:inactive}(Currently {C:money}$#3#{C:inactive})",
+                },
+            },
+            j_hallucination = {
+                name = "Hallucination",
+                text = {
+                    "Create a {C:tarot}Tarot{} card when",
+                    "any {C:attention}Booster Pack{} is opened",
+                    "{C:inactive}(Must have room)",
+                },
+            },
+            j_juggler = {
+                name = "Juggler",
+                text = {
+                    "Gain {C:attention}+#1#{} temporary hand size",
+                    "when {C:attention}Blind{} is selected",
+                },
+            },
+            j_drunkard = {
+                name = "Drunkard",
+                text = {
+                    "Gain {C:red}+#1#{} discard",
+                    "when {C:attention}Blind{} is selected",
+                },
+            },
+            j_flash = {
+                name = "Flash Card",
+                text = {
+                    "This Joker gains {C:mult}+#1#{} Mult",
+                    "per {C:attention}reroll{} done in",
+                    "the shop this run",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+                },
+            },
+        }
     },
     misc={
         dictionary={
 			k_activated="Activated!",
-            madness_overscoring="Overscoring Adjustment",
-            madness_overscoring_explain={
+            madness_overscoring="Overscoring",
+            k_madness_overscoring="Overscore Ante",
+            ph_madness_overscore="Overscore:",
+            madness_overscore_threshold="Overscore Threshold"
+        },
+        v_dictionary = {
+            a_discards="+#1# Discards",
+            a_discards_minus="-#1# Discards",
+            madness_overscoring_explain = {
                 "If scoring goes above the base Blind requirement",
-                "of {C:attention}3 Antes after{} the current Ante,",
-                "add the difference to the {C:green}Overscoring Ante{}.",
-                "The {C:attention}next Ante{} will have a base Blind requirement",
-                "{C:attention}larger{} than the score that triggered overscoring.",
+                "of #1# Antes after the current Ante,",
+                "add the difference to the Overscoring Ante.",
+                "The next Ante will have a base Blind requirement",
+                "larger than the score that triggered overscoring.",
                 "This is best used with other mods that add",
                 "more unbalanced additions to the game."
-            },
-            k_madness_overscoring="Overscore Ante"
+            }
         }
     },
 }
