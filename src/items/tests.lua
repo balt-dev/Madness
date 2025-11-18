@@ -16,7 +16,7 @@ Balatest.TestPlay {
         Balatest.play_hand { '2D', '3D', '4D', '5D', '7D' }
     end,
     assert = function()
-        Balatest.assert_eq(G.jokers.cards[1].ability.extra.mult, 10)
+        Balatest.assert_eq(G.jokers.cards[1].ability.extra.chips, 50)
     end
 }
 
@@ -27,10 +27,20 @@ Balatest.TestPlay {
         Balatest.play_hand { '2D', '2C', '4D', '4C', '7D' }
     end,
     assert = function()
-        Balatest.assert_eq(G.jokers.cards[1].ability.extra.mult, 4)
+        Balatest.assert_eq(G.jokers.cards[1].ability.extra.chips, 20)
     end
 }
 
+Balatest.TestPlay {
+    name = "jolly",
+    jokers = { 'j_jolly' },
+    execute = function()
+        Balatest.play_hand { '2D', '2S', '4D', '4H', '4C' }
+    end,
+    assert = function()
+        Balatest.assert_chips(1120)
+    end
+}
 
 Balatest.TestPlay {
     name = "space",
@@ -290,4 +300,17 @@ Balatest.TestPlay {
     assert = function()
         Balatest.assert_eq(G.GAME.overscoring_ante, 9)
     end,
+}
+
+
+Balatest.TestPlay {
+    name = "half",
+    jokers = { 'j_half' },
+    execute = function()
+        G.GAME.blind.chips = -10000
+        Balatest.play_hand { 'AS', '2S', '3S', '4S', '5S' }
+        Balatest.play_hand { 'AC', 'AD', 'AH' }
+    end,
+    assert = function()
+    end
 }

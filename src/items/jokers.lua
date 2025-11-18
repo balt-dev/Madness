@@ -240,13 +240,9 @@ SMODS.Joker:take_ownership('marble', {
 		then
             for _, discarded_card in ipairs(context.full_hand) do
 				discarded_card:set_ability('m_stone', nil, true)
-				G.E_MANAGER:add_event(Event({
-					func = function()
-						discarded_card:juice_up()
-						return true
-					end
-				}))
+    			discarded_card:juice_up()
             end
+            return { message = localize("k_plus_stone") }
         end
 	end
 })
@@ -492,7 +488,7 @@ SMODS.Joker:take_ownership('gros_michel', {
 
 SMODS.Joker:take_ownership('cavendish', {
 	rarity = 3,
-    config = { extra = { xmult = 15, odds = 1000 } },
+    config = { extra = { xmult = 7, odds = 1000 } },
 	loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'madness_cavendish')
 		return { vars = {
@@ -1226,13 +1222,13 @@ SMODS.Joker:take_ownership('vagabond', {
     calculate = function(self, card, context)
         if context.joker_main and
             #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            if G.GAME.dollars <= card.ability.extra then -- See note about Talisman compatibility on the wiki
+            if to_big(G.GAME.dollars) <= to_big(card.ability.extra) then
                 G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
                 G.E_MANAGER:add_event(Event({
                     func = (function()
                         SMODS.add_card {
                             set = 'Tarot',
-                            key_append = 'vagabond' -- Optional, useful for manipulating the random seed and checking the source of the creation in `in_pool`.
+                            key_append = 'vagabond'
                         }
                         G.GAME.consumeable_buffer = 0
                         return true
@@ -2173,6 +2169,51 @@ SMODS.Joker:take_ownership('hit_the_road', {
     end
 })
 
+SMODS.Joker:take_ownership('satellite', {
+    config = { extra = 1 },
+    calculate = function(self, card, context)
+        if context.joker_main then 
+            local planets_used = 0
+            for k, v in pairs(G.GAME.consumeable_usage) do
+                if v.set == 'Planet' then planets_used = planets_used + 1 end
+            end
+            return { dollars = planets_used > 0 and planets_used * card.ability.extra or nil }
+        end
+    end
+})
+
+SMODS.Joker:take_ownership('drivers_license', {
+    config = { x_mult = 10, extra = 16 },
+    loc_vars = function(self, info_queue, card)
+        local driver_tally = 0
+        for _, playing_card in pairs(G.playing_cards or {}) do
+            if
+                next(SMODS.get_enhancements(playing_card))
+                or playing_card.edition
+                or playing_card.ability.seal
+            then driver_tally = driver_tally + 1 end
+        end
+        return { vars = { card.ability.x_mult, card.ability.extra, driver_tally } }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local driver_tally = 0
+            for _, playing_card in pairs(G.playing_cards) do
+                if 
+                    next(SMODS.get_enhancements(playing_card))
+                    or playing_card.edition
+                    or playing_card.ability.seal
+                then driver_tally = driver_tally + 1 end
+            end
+            if driver_tally >= card.ability.extra then
+                return {
+                    xmult = card.ability.x_mult
+                }
+            end
+        end
+    end,
+})
+
 local rep_hand_calc = function(self, card, context)
     if context.repetition and context.cardarea == G.play and context.scoring_name == card.ability.extra.type then
         return { repetitions = 1 }
@@ -2230,6 +2271,24 @@ SMODS.Joker:take_ownership('invisible', {
     end,
 })
 
+SMODS.Joker:take_ownership('bootstraps', {
+    config = { extra = { dollars = 3, mult = 3 } },
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                 mult = card.ability.extra.mult *
+                    math.floor(((G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)) / card.ability.extra.dollars)
+            }
+        end
+    end,
+})
+
+SMODS.Joker:take_ownership('constellation', { 
+    config = { extra = 0.25 },
+    calculate = function(self, card, context) if context.joker_main then return {xmult = card.ability.x_mult} end end
+} )
+
+
 -- Fix these getting yote by lovely patch
 
 SMODS.Joker:take_ownership('stencil', {
@@ -2274,4 +2333,113 @@ SMODS.Joker:take_ownership('oops', {
 			G.GAME.probabilities[k] = v/2
 		end
 	end
+}, true)
+
+SMODS.Joker:take_ownership('cartomancer', {
+    calculate = function(self, card, context)
+        if context.setting_blind and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+            G.E_MANAGER:add_event(Event({
+                func = (function()
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            SMODS.add_card {
+                                set = 'Tarot',
+                                key_append = 'cartomancer'
+                            }
+                            G.GAME.consumeable_buffer = 0
+                            return true
+                        end
+                    }))
+                    SMODS.calculate_effect({ message = localize('k_plus_tarot'), colour = G.C.PURPLE },
+                        context.blueprint_card or card)
+                    return true
+                end)
+            }))
+            return nil, true
+        end
+    end
+}, true)
+
+SMODS.Joker:take_ownership('caino', {
+    calculate = function(self, card, context)
+        if context.remove_playing_cards and context.scoring_hand and not context.blueprint then
+            for i, c in ipairs(context.removed) do
+                if c:is_face() then
+                    SMODS.scale_card(card, {
+                        ref_table = card.ability,
+                        ref_value = "caino_xmult",
+                        scalar_table = card.ability,
+                        scalar_value = "x_mult",
+                        operation = "+",
+                        no_message = true
+                    })
+                    return {
+                        message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.caino_xmult } },
+                        colour = G.C.RED
+                    }
+                end
+            end
+        end
+        if context.joker_main or context.forcetrigger then return {xmult = card.ability.caino_xmult} end
+    end
+}, true)
+
+SMODS.Joker:take_ownership('yorick', {
+    calculate = function(self, card, context)
+        if context.discard and not context.blueprint then
+            if card.ability.yorick_discards <= 1 then
+                card.ability.yorick_discards = card.ability.extra.discards
+                SMODS.scale_card(card, {
+                    ref_table = card.ability,
+                    ref_value = "x_mult",
+                    scalar_table = card.ability.extra,
+                    scalar_value = "xmult",
+                    operation = "+",
+                    no_message = true
+                })
+                return {
+                    message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.x_mult } },
+                    colour = G.C.RED
+                }
+            else
+                card.ability.yorick_discards = card.ability.yorick_discards - 1
+                return nil, true -- This is for Joker retrigger purposes
+            end
+        end
+        if context.joker_main then
+            return {
+                xmult = card.ability.x_mult
+            }
+        end
+    end
+}, true)
+
+SMODS.Joker:take_ownership('chicot', {
+    calculate = function(self, card, context)
+        if context.setting_blind and not context.blueprint and context.blind.boss then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            G.GAME.blind:disable()
+                            play_sound('timpani')
+                            delay(0.4)
+                            return true
+                        end
+                    }))
+                    SMODS.calculate_effect({ message = localize('ph_boss_disabled') }, card)
+                    return true
+                end
+            }))
+            return nil, true -- This is for Joker retrigger purposes
+        end
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
+            G.GAME.blind:disable()
+            play_sound('timpani')
+            SMODS.calculate_effect({ message = localize('ph_boss_disabled') }, card)
+        end
+    end
 }, true)

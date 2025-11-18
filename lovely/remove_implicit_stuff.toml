@@ -243,10 +243,25 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
-pattern = '''elseif _c.name == 'Invisible Joker' then '''
+pattern = '''elseif _c.name == 'Invisible Joker' then'''
 position = "at"
-payload = '''elseif _c.name == 'Invisible Joker' and false then -- Removed by Madness'''
-times = 1
+payload = '''elseif false then -- Removed by Madness'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''elseif context.cards_destroyed then'''
+position = "at"
+payload = '''elseif false then -- Removed by Madness'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.name == 'Satellite' then'''
+position = "at"
+payload = '''if self.ability.name == 'Satellite' and false then'''
 match_indent = true
 
 [[patches]]

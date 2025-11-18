@@ -639,6 +639,33 @@ return {
                     "than {E:1,C:attention}4 Jokers{}",
                 },
             },
+            j_satellite = {
+                name = "Satellite",
+                text = {
+                    "Gives {C:money}$#1#{} per",
+                    "unique {C:planet}Planet{} card",
+                    "used this run",
+                    "{C:inactive}(Currently {C:money}$#2#{C:inactive})",
+                },
+                unlock = {
+                    "Have {E:1,C:money}$#1#",
+                    "or more",
+                },
+            },
+            j_drivers_license = {
+                name = "Driver's License",
+                text = {
+                    "{X:mult,C:white} X#1# {} Mult if you have",
+                    "at least {C:attention}#2#{} cards",
+                    "in your full deck with",
+                    "an {C:attention}Enhancement{}, {C:attention}Edition{}, or {C:attention}Seal",
+                    "{C:inactive}(Currently {C:attention}#3#{C:inactive})",
+                },
+                unlock = {
+                    "Enhance {E:1,C:attention}#1#{} cards",
+                    "in your deck",
+                },
+            },
         },
         Stake = (MADNESS.config.blue_stake_rework and {
             stake_blue={
