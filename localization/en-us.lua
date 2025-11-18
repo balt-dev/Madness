@@ -4,37 +4,37 @@ return {
             j_wrathful_joker={
                 name="Wrathful Joker",
                 text={
-                    "Gains {C:mult}+#1#{} Mult",
+                    "Gains {C:chips}+#1#{} Chips",
                     "when played card with",
 					"{C:spades}#2#{} suit is scored",
-                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
                 },
             },
             j_lusty_joker={
                 name="Lusty Joker",
                 text={
-                    "Gains {C:mult}+#1#{} Mult",
+                    "Gains {C:chips}+#1#{} Chips",
                     "when played card with",
 					"{C:hearts}#2#{} suit is scored",
-                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
                 },
             },
             j_greedy_joker={
                 name="Greedy Joker",
                 text={
-                    "Gains {C:mult}+#1#{} Mult",
+                    "Gains {C:chips}+#1#{} Chips",
                     "when played card with",
 					"{C:diamonds}#2#{} suit is scored",
-                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
                 },
             },
             j_gluttenous_joker={
                 name="Gluttonous Joker",
                 text={
-                    "Gains {C:mult}+#1#{} Mult",
+                    "Gains {C:chips}+#1#{} Chips",
                     "when played card with",
 					"{C:clubs}#2#{} suit is scored",
-                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
                 },
             },
             j_half={
@@ -418,7 +418,237 @@ return {
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
                 },
             },
-        }
+            j_ramen = {
+                name = "Ramen",
+                text = {
+                    "{X:mult,C:white} X#1# {} Mult,",
+                    "loses {X:mult,C:white} X#2# {} Mult",
+                    "per {C:red}discard{}",
+                },
+            },
+            j_castle = {
+                name = "Castle",
+                text = {
+                    "This Joker gains {C:chips}+#1#{} Chips",
+                    "per discarded card",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+                },
+            },
+            j_walkie_talkie = {
+                name = "Walkie Talkie",
+                text = {
+                    "Each played {C:attention}10{} or {C:attention}4",
+                    "gives {C:chips}+#1#{} Chips and",
+                    "{C:money}$#2#{} when scored",
+                },
+            },
+            j_campfire = {
+                name = "Campfire",
+                text = {
+                    "For each card {C:attention}sold{},",
+                    "this Joker gains {X:mult,C:white}X#1#{} Mult",
+                    "times the card's sell value",
+                    "Resets when {C:attention}Boss Blind{} is defeated",
+                    "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
+                },
+            },
+            j_ticket = {
+                name = "Golden Ticket",
+                text = {
+                    "Retrigger {C:attention}Gold{} cards",
+                    "held in hand",
+                },
+                unlock = {
+                    "Play a 5 card hand",
+                    "that contains only",
+                    "{C:attention,E:1}Gold{} cards",
+                },
+            },
+            j_mr_bones = {
+                name = "Mr. Bones",
+                text = {
+                    "Returns to the previous shop",
+                    "upon death with {C:attention}+$#1#{},",
+                    "a {C:attention}#2#{}, and a {C:attention}#3#",
+                    "{C:red}Self destructs",
+                }
+            },
+            j_acrobat = {
+                name = "Acrobat",
+                text = {
+                    "{X:red,C:white} X#1# {} Mult",
+                }
+            },
+            j_swashbuckler = {
+                name = "Swashbuckler",
+                text = {
+                    "Adds the sell value",
+                    "of all owned {C:attention}Jokers{}",
+                    "and {C:attention}consumables{} to Mult",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                },
+                unlock = {
+                    "Sell a total of",
+                    "{C:attention,E:1}#1#{} Joker cards",
+                    "{C:inactive}(#2#)",
+                },
+            },
+            j_acrobat = {
+                name = "Acrobat",
+                text = {
+                    "{X:red,C:white} X#1# {} Mult",
+                }
+            },
+            j_troubadour = {
+                name = "Troubadour",
+                text = {
+                    "{C:attention}+#1#{} hand size,",
+                    "{C:blue}+#2#{} hand each round",
+                },
+                unlock = {
+                    "Win {C:attention,E:1}#1#{} consecutive",
+                    "rounds by playing",
+                    "only 1 hand",
+                },
+            },
+            j_certificate = {
+                name = "Certificate",
+                text = {
+                    "If {C:attention}first discard{} of round",
+                    "has only {C:attention}1{} card,",
+                    "apply a random {C:attention}Seal{} to it",
+                },
+                unlock = {
+                    "Have a Gold",
+                    "playing card with",
+                    "a {C:attention,E:1}Gold Seal",
+                },
+            },
+            j_smeared = {
+                name = "Smeared Joker",
+                text = {
+                    "Disables all",
+                    "{C:attention}suit-debuffing{}",
+                    "Boss Blinds"
+                },
+                unlock = {
+                    "Have a Gold",
+                    "playing card with",
+                    "a {C:attention,E:1}Gold Seal",
+                },
+            },
+            j_bloodstone = {
+                name = "Bloodstone",
+                text = {
+                    "Played cards with",
+                    "{C:hearts}Heart{} suit give",
+                    "{X:mult,C:white} X#3# {} Mult when scored",
+                },
+                unlock = {
+                    "Have at least {E:1,C:attention}#1#",
+                    "cards with {E:1,C:attention}#2#",
+                    "suit in your deck",
+                },
+            },
+            j_flower_pot = {
+                name = "Flower Pot",
+                text = {
+                    "{X:mult,C:white} X#1# {} Mult if poker",
+                    "hand contains a",
+                    "{C:diamonds}Diamond{} card, {C:clubs}Club{} card,",
+                    "{C:hearts}Heart{} card, and {C:spades}Spade{} card,",
+                    "{C:attention}Ignores debuffs",
+                },
+                unlock = {
+                    "Reach Ante",
+                    "level {E:1,C:attention}#1#",
+                },
+            },
+            j_seeing_double = {
+                name = "Seeing Double",
+                text = {
+                    "If played hand contains",
+                    "{E:1,C:attention}#1#,",
+                    "create a {C:dark_edition}Negative {C:spectral}Spectral{} card",
+                },
+                unlock = {
+                    "Play a hand",
+                    "that contains",
+                    "{E:1,C:attention}#1#",
+                },
+            },
+            j_matador = {
+                name = "Matador",
+                text = {
+                    "Earn {C:money}$#1#{} when scoring",
+                    "a {C:attention}debuffed{} card",
+                },
+                unlock = {
+                    "Defeat a Boss Blind",
+                    "in {E:1,C:attention}1 hand{} without",
+                    "using any discards",
+                },
+            },
+            j_hit_the_road = {
+                name = "Hit the Road",
+                text = {
+                    "This Joker gains {X:mult,C:white} X#1# {} Mult",
+                    "when discarding a {C:attention}Jack{}",
+                    "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
+                },
+                unlock = {
+                    "Discard {E:1,C:attention}5",
+                    "{E:1,C:attention}Jacks{} at the",
+                    "same time",
+                },
+            },
+            j_duo = {
+                name = "The Duo",
+                text = { "Retrigger all cards", "if played hand", "is a {C:attention}#1#", },
+                unlock = { "Win a run", "without playing", "a {E:1,C:attention}#1#" },
+            },
+            j_trio = {
+                name = "The Trio",
+                text = { "Retrigger all cards", "if played hand", "is a {C:attention}#1#", },
+                unlock = { "Win a run", "without playing", "a {E:1,C:attention}#1#" },
+            },
+            j_family = {
+                name = "The Family",
+                text = { "Retrigger all cards", "if played hand", "is a {C:attention}#1#", },
+                unlock = { "Win a run", "without playing", "a {E:1,C:attention}#1#" },
+            },
+            j_order = {
+                name = "The Order",
+                text = { "Retrigger all cards", "if played hand", "is a {C:attention}#1#", },
+                unlock = { "Win a run", "without playing", "a {E:1,C:attention}#1#" },
+            },
+            j_tribe = {
+                name = "The Tribe",
+                text = { "Retrigger all cards", "if played hand", "is a {C:attention}#1#", },
+                unlock = { "Win a run", "without playing", "a {E:1,C:attention}#1#" },
+            },
+            j_invisible = {
+                name = "Invisible Joker",
+                text = {
+                    "Sell this card to",
+                    "{C:attention}Duplicate{} a random Joker",
+                },
+                unlock = {
+                    "Win a run without",
+                    "ever having more",
+                    "than {E:1,C:attention}4 Jokers{}",
+                },
+            },
+        },
+        Stake = (MADNESS.config.blue_stake_rework and {
+            stake_blue={
+                name="Blue Stake",
+                text={
+                    "{C:attention}-1{} hand size",
+                    "{s:0.8}Applies all previous Stakes",
+                },
+            }
+        }) or nil
     },
     misc={
         dictionary={
@@ -426,7 +656,13 @@ return {
             madness_overscoring="Overscoring",
             k_madness_overscoring="Overscore Ante",
             ph_madness_overscore="Overscore:",
-            madness_overscore_threshold="Overscore Threshold"
+            madness_overscore_threshold="Overscore Threshold",
+            madness_blind_adjust="Blind Adjustment",
+            madness_blue_stake="Blue Stake Rework",
+            madness_blue_stake_loc={
+                "Changes Blue Stake to remove hand size instead of discards.",
+                "Restart the game after changing this."
+            }
         },
         v_dictionary = {
             a_discards="+#1# Discards",
@@ -438,7 +674,14 @@ return {
                 "The next Ante will have a base Blind requirement",
                 "larger than the score that triggered overscoring.",
                 "This is best used with other mods that add",
-                "more unbalanced additions to the game."
+                "more unbalanced additions to the game.",
+                "This may break with mods that alter Blind scaling,",
+                "as this uses a static approximation of",
+                "the inverse of the Blind scaling function."
+            },
+            madness_blind_adjust_explain = {
+                "Raises all blind requirements to",
+                "the power of this value."
             }
         }
     },

@@ -1,6 +1,6 @@
 [manifest]
 version = "1.0.0"
-priority = 1999999999
+priority = 2147483647
 
 [[patches]]
 [patches.pattern]
@@ -124,6 +124,43 @@ times = 1
 [[patches]]
 [patches.pattern]
 target = "card.lua"
+pattern = '''elseif self.ability.name == 'Castle' then loc_vars = {self.ability.extra.chip_mod, localize(G.GAME.current_round.castle_card.suit, 'suits_singular'), self.ability.extra.chips, colours = {G.C.SUITS[G.GAME.current_round.castle_card.suit]}}'''
+position = "at"
+payload = '''elseif self.ability.name == 'Castle' then -- Removed by Madness'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''elseif self.ability.name == 'Walkie Talkie' then loc_vars = {self.ability.extra.chips, self.ability.extra.mult}'''
+position = "at"
+payload = '''elseif self.ability.name == 'Walkie Talkie' then -- Removed by Madness'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.name == 'Certificate' then'''
+position = "at"
+payload = '''if self.ability.name == 'Certificate' and false then'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''elseif self.ability.name == 'Bloodstone' then '''
+position = "at"
+payload = '''elseif self.ability.name == 'Bloodstone' and false then -- Removed by Madness'''
+match_indent = true
+times = 1
+
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
 pattern = '''colours = {G.C.UI.TEXT_DARK},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.2011, scale = 0.32, min_cycle_time = 0})}},
             }'''
 position = "after"
@@ -152,6 +189,15 @@ times = 1
 [[patches]]
 [patches.pattern]
 target = "card.lua"
+pattern = '''if self.ability.name == 'Campfire' and not context.blueprint and self ~= context.card then'''
+position = "at"
+payload = '''if false then -- Removed by Madness'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
 pattern = '''elseif self.ability.name == 'Raised Fist' then'''
 position = "at"
 payload = '''elseif self.ability.name == 'Raised Fist' then loc_vars = {self.ability.extra.mult}'''
@@ -173,6 +219,33 @@ target = "card.lua"
 pattern = '''if self.ability.name == 'Ride the Bus' and not context.blueprint then'''
 position = "at"
 payload = '''if false then'''
+times = 1
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.name == 'Hit the Road' and self.ability.x_mult > 1 then'''
+position = "at"
+payload = '''if false then'''
+times = 1
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''elseif self.ability.name == 'Invisible Joker' then loc_vars = {self.ability.extra, self.ability.invis_rounds}'''
+position = "at"
+payload = '''elseif self.ability.name == 'Invisible Joker' then -- Removed by Madness'''
+times = 1
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''elseif _c.name == 'Invisible Joker' then '''
+position = "at"
+payload = '''elseif _c.name == 'Invisible Joker' and false then -- Removed by Madness'''
 times = 1
 match_indent = true
 

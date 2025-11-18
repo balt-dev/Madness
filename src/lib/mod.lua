@@ -1,6 +1,7 @@
 MADNESS.load_module "config"
 MADNESS.load_module "menu"
 MADNESS.load_module "overscoring"
+MADNESS.load_module "return_to_shop"
 
 if JokerDisplay then
     NFS.write(JokerDisplay.path .. '.lovelyignore', '')
