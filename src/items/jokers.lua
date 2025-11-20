@@ -1013,7 +1013,7 @@ local madness_quips = {
     "pog baron pog",
     "baron pog baron",
     "* Hey, first off, it's they/them, fuckface.",
-    "impl Joker for jokers::Madness",
+    "{C:red,s:0.75}impl {C:attention,s:0.75}Joker {C:red,s:0.75}for {C:blue,s:0.75}jokers{C:inactive,s:0.75}::{C:attention,s:0.75}Madness",
     "brought to you by a queer furry with autism",
     "Also try Inkbleed!",
     "Also try BaltsWarehouse!",
@@ -1037,7 +1037,14 @@ local madness_quips = {
     "the creator of this mod has over {C:attention,s:0.75}$400{C:inactive,s:0.75} in rain world merch",
     "what do you MEAN 2017 was " .. tostring(math.floor((os.time() - 1514786399) / 31536000)) .. " years ago",
     "sudo rm -rf /boot",
-    "eval G.GAME.dollars = math.huge"
+    "eval {C:blue,s:0.75}G{C:inactive,s:0.75}.{C:blue,s:0.75}GAME{C:inactive,s:0.75}.{C:blue,s:0.75}dollars{C:inactive,s:0.75} = {C:attention,s:0.75}math{C:inactive,s:0.75}.{C:blue,s:0.75}huge",
+    "my fursuit ate my homework",
+    "{C:red,s:0.75}char{C:inactive,s:0.75}* {C:blue,s:0.75}t {C:inactive,s:0.75}= {C:green,s:0.75}malloc{C:inactive,s:0.75}({C:attention,s:0.75}1{C:inactive,s:0.75}<<{C:attention,s:0.75}32{C:inactive,s:0.75});",
+    "banjo kazyaoi?",
+    "big tail never fail",
+    "ayo who else on prozac",
+    "#staff-furry-rp exists and it's called my dms",
+    "it is currently {C:attention,s:0.75}12:10 AM{C:inactive,s:0.75} as of me writing this quote. such is life"
 }
 
 local madness_index = 1
