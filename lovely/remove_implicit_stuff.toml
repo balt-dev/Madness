@@ -16,6 +16,15 @@ times = 1
 [[patches]]
 [patches.pattern]
 target = "card.lua"
+pattern = '''if self.ability.name == 'Cloud 9' and self.ability.nine_tally and self.ability.nine_tally > 0 then'''
+position = "at"
+payload = '''if false then'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
 pattern = '''if self.ability.name == 'Credit Card' then
             G.GAME.bankrupt_at = G.GAME.bankrupt_at + self.ability.extra
         end'''
@@ -23,6 +32,16 @@ position = "before"
 payload = '''--[['''
 match_indent = true
 times = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.name == 'Business Card' and'''
+position = "after"
+payload = '''false and -- Removed by Madness'''
+match_indent = true
+times = 1
+
 
 [[patches]]
 [patches.pattern]

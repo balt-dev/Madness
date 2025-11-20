@@ -395,7 +395,7 @@ SMODS.Joker:take_ownership('fibonacci', {
 })
 
 SMODS.Joker:take_ownership('steel_joker', {
-    config = { extra = 1 },
+    config = { extra = 2 },
     calculate = function(self, card, context)
         if context.joker_main or context.forcetrigger then
             local steel_tally = 0
@@ -541,11 +541,20 @@ SMODS.Joker:take_ownership('scholar', {
 
 SMODS.Joker:take_ownership('business', {
 	rarity = 2,
-    config = { extra = { odds = 5, dollars = 15 } },
+    config = { extra = 5, p_dollars = 5 },
 	loc_vars = function(self, info_queue, card)
-        local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'vremade_business')
-        return { vars = { numerator, denominator, card.ability.extra.dollars } }
+        local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra, 'business')
+        return { vars = { numerator, denominator, card.ability.p_dollars } }
     end,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and
+            context.other_card:is_face() and
+            SMODS.pseudorandom_probability(card, 'business', 1, card.ability.extra) then
+            return {
+                dollars = card.ability.p_dollars,
+            }
+        end
+    end
 })
 
 SMODS.Joker:take_ownership('supernova', {
@@ -672,7 +681,7 @@ SMODS.Joker:take_ownership('blackboard', {
 })
 
 SMODS.Joker:take_ownership('runner', {
-	config = { extra = { chips = 0, chip_mod = 20 } },
+	config = { extra = { chips = 0, chip_mod = 16 } },
     calculate = function(self, card, context)
         if context.before and not context.blueprint and #G.play.cards < 5 then
             SMODS.scale_card(card, {
@@ -971,14 +980,14 @@ SMODS.Joker:take_ownership('card_sharp', {
 
 SMODS.Joker:take_ownership('red_card', {
     rarity = 2,
-    config = { extra = { xmult_gain = 0.1, xmult = 1 } },
+    config = { extra = { xmult_gain = 0.5, xmult = 1 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xmult_gain, card.ability.extra.xmult } }
     end,
     calculate = function(self, card, context)
         if context.skipping_booster and not context.blueprint then
             SMODS.scale_card(card, {
-                ref_table = card.ability,
+                ref_table = card.ability.extra,
                 ref_value = "xmult",
                 scalar_table = card.ability.extra,
                 scalar_value = "xmult_gain",
@@ -1099,24 +1108,24 @@ SMODS.Joker:take_ownership('madness', {
 })
 
 SMODS.Joker:take_ownership('square', {
-    config = { extra = { chips = 0, chip_mod = 16 } },
+    config = { extra = { mult = 0, mult_mod = 4 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.chips, card.ability.extra.chip_mod } }
+        return { vars = { card.ability.extra.mult, card.ability.extra.mult_mod } }
     end,
     calculate = function(self, card, context)
         if context.before and not context.blueprint and #context.full_hand == 4 then
             SMODS.scale_card(card, {
                 ref_table = card.ability.extra,
-                ref_value = "chips",
+                ref_value = "mult",
                 scalar_table = card.ability.extra,
-                scalar_value = "chip_mod",
+                scalar_value = "mult_mod",
                 operation = "+",
                 no_message = true
             })
         end
         if context.joker_main or context.forcetrigger then
             return {
-                chips = card.ability.extra.chips
+                mult = card.ability.extra.mult
             }
         end
     end,
@@ -1391,6 +1400,12 @@ SMODS.Joker:take_ownership('gift', {
 
 SMODS.Joker:take_ownership('turtle_bean', {
     config = { extra = { h_size = 10, h_mod = 2 } },
+    add_to_deck = function(self, card, from_debuff)
+        G.hand:change_size(card.ability.extra.h_size)
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.hand:change_size(-card.ability.extra.h_size)
+    end
 })
 
 SMODS.Joker:take_ownership('erosion', {
@@ -1417,7 +1432,7 @@ SMODS.Joker:take_ownership('erosion', {
 })
 
 SMODS.Joker:take_ownership('reserved_parking', {
-    config = { extra = { dollars = 2 } },
+    config = { extra = { dollars = 3 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.dollars } }
     end,
@@ -1486,10 +1501,14 @@ SMODS.Joker:take_ownership('hallucination', {
 SMODS.Joker:take_ownership('fortune_teller', {
     config = { extra = 3 },
     demicolon_compat = true,
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra, card.ability.extra * (G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.tarot or 0) } }
+    end,
     calculate = function(self, card, context)
         if context.joker_main or context.forcetrigger then
             return { 
-                mult = card.ability.extra
+                mult = card.ability.extra *
+                    (G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.tarot or 0)
             }
         end
     end
@@ -1561,9 +1580,27 @@ SMODS.Joker:take_ownership('golden', {
     end
 })
 
+SMODS.Joker:take_ownership('lucky_cat', {
+    config = { extra = 0.5 },
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                xmult = card.ability.x_mult
+            }
+        end
+    end
+})
+
 SMODS.Joker:take_ownership('baseball', {
     rarity = 2,
-    config = { extra = 2 }
+    config = { extra = 2 },
+    calculate = function(self, card, context)
+        if context.other_joker and (context.other_joker.config.center.rarity == 2 or context.other_joker.config.center.rarity == "Uncommon") then
+            return {
+                xmult = card.ability.extra
+            }
+        end
+    end,
 })
 
 SMODS.Joker:take_ownership('bull', {
@@ -1585,12 +1622,6 @@ SMODS.Joker:take_ownership('flash', {
         return { vars = { card.ability.extra, card.ability.extra * G.GAME.reroll_tally } }
     end,
     calculate = function(self, card, context)
-        if context.reroll_shop and not context.blueprint then
-            return {
-                message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra } },
-                colour = G.C.MULT,
-            }
-        end
         if context.joker_main or context.forcetrigger then
             return {
                 mult = card.ability.extra * (G.GAME.reroll_tally or 0)
@@ -1604,6 +1635,28 @@ SMODS.Joker:take_ownership('popcorn', {
     calculate = function(self, card, context)
         if context.joker_main or context.forcetrigger then
             return { mult = card.ability.mult }
+        end
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+            if card.ability.mult - card.ability.extra <= 0 then
+                SMODS.destroy_cards(card, nil, nil, true)
+                return {
+                    message = localize('k_eaten_ex'),
+                    colour = G.C.RED
+                }
+            else
+                SMODS.scale_card(card, {
+                    ref_table = card.ability,
+                    ref_value = "mult",
+                    scalar_table = card.ability,
+                    scalar_value = "extra",
+                    operation = "-",
+                    no_message = true
+                })
+                return {
+                    message = localize { type = 'variable', key = 'a_mult_minus', vars = { card.ability.extra } },
+                    colour = G.C.MULT
+                }
+            end
         end
     end
 })
@@ -1682,7 +1735,7 @@ SMODS.Joker:take_ownership('ramen', {
 
 SMODS.Joker:take_ownership('castle', {
     rarity = 1,
-    config = { extra = 3, h_chips = 0 },
+    config = { extra = 5, h_chips = 0 },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra, card.ability.h_chips } }
     end,
@@ -1962,7 +2015,7 @@ SMODS.Joker:take_ownership('arrowhead', {
         return { vars = { card.ability.h_chips } }
     end,
     calculate = function(self, card, context)
-        if context.individual and context.cardarea == G.play and context.other_card:is_suit("Clubs") then
+        if context.individual and context.cardarea == G.play and context.other_card:is_suit("Spades") then
             return {
                 chips = card.ability.h_chips
             }
@@ -1976,16 +2029,16 @@ SMODS.Joker:take_ownership('onyx_agate', {
         return { vars = { card.ability.mult } }
     end,
     calculate = function(self, card, context)
-        if context.individual and context.cardarea == G.play and context.other_card:is_suit("Spades") then
+        if context.individual and context.cardarea == G.play and context.other_card:is_suit("Clubs") then
             return {
-                chips = card.ability.mult
+                mult = card.ability.mult
             }
         end
     end
 })
 
 SMODS.Joker:take_ownership('rough_gem', {
-    config = { extra = 3 },
+    config = { extra = 4 },
 })
 
 SMODS.Joker:take_ownership('flower_pot', {
@@ -2443,3 +2496,43 @@ SMODS.Joker:take_ownership('chicot', {
         end
     end
 }, true)
+
+SMODS.Joker:take_ownership('trading', {
+    calculate = function(self, card, context)
+        if context.first_hand_drawn then
+            local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
+            juice_card_until(card, eval, true)
+        end
+        if context.discard and not context.blueprint and
+            G.GAME.current_round.discards_used <= 0 and #context.full_hand == 1 then
+            return {
+                dollars = card.ability.extra,
+                remove = true
+            }
+        end
+    end
+}, true)
+
+SMODS.Joker:take_ownership('wee', {
+    config = { extra = { chips = 0, chip_mod = 20 } },
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                chips = card.ability.extra.chips,
+            }
+        end
+    end
+})
+
+SMODS.Joker:take_ownership('idol', {
+    config = { extra = 3 },
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and
+            context.other_card:get_id() == G.GAME.current_round.idol_card.id and
+            context.other_card:is_suit(G.GAME.current_round.idol_card.suit) then
+            return {
+                xmult = card.ability.extra
+            }
+        end
+    end,
+})

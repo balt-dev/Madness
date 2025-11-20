@@ -168,6 +168,19 @@ MADNESS.config_tab = function()
 	}
 	blue_stake_toggle.config.tooltip = { text = localize 'madness_blue_stake_loc' }
 
+	local game_speed = create_number_select {
+		label = localize("madness_game_speed"),
+		min = 0.1,
+		max = math.huge,
+		step = 0.1,
+		default = 1,
+		current = MADNESS.config.game_speed,
+		callback = function(val)
+			MADNESS.config.game_speed = val
+		end,
+	}
+	game_speed.config.tooltip = { text = localize 'madness_speed_explain' }
+
 	return {
 		n=G.UIT.ROOT,
 		config = {align = "cm", padding = 0.05, r = 0.1, minw=8, minh=6, colour = G.C.BLACK}, 
@@ -177,8 +190,9 @@ MADNESS.config_tab = function()
 				config = {align = "cm", colour = G.C.TRANSPARENT},
 				nodes = {
 					blue_stake_toggle,
+					game_speed,
+					{n=G.UIT.R, config = {minh=0.2}},
 					overscoring_toggle,
-					{n=G.UIT.R, config = {minw=1}},
 					overscoring,
 				}
 			},

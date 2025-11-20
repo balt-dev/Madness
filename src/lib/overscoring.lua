@@ -26,6 +26,7 @@ end
 if not to_big then function to_big(x) return x end end
 
 function get_inverse_blind_amount(raw_score)
+	raw_score = to_big(raw_score)
 	local score = to_big(raw_score) / to_big(blind_amt(8))
 	if score < to_big(1) then
 		for i = 0, 8 do

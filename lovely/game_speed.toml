@@ -1,0 +1,35 @@
+[manifest]
+version = "1.0.0"
+priority = -2147483648
+
+[[patches]]
+[patches.pattern]
+target = "main.lua"
+pattern = """if love.timer then dt = love.timer.step() end"""
+position = "after"
+payload = """
+local updates = 0
+"""
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "main.lua"
+pattern = """if love.update then love.update(dt_smooth) end -- will pass 0 if love.timer is disabled"""
+position = "at"
+payload = """
+if love.update then
+  if MADNESS and MADNESS.config and MADNESS.config.game_speed then
+    updates = updates + MADNESS.config.game_speed
+  else
+    updates = updates + 1
+  end
+  while updates > 0 do
+    love.update(dt_smooth)
+    updates = updates - 1
+  end
+end
+"""
+match_indent = true
+times = 1

@@ -298,10 +298,10 @@ return {
             j_square={
                 name="Square Joker",
                 text={
-                    "This Joker gains {C:chips}+#2#{} Chips",
+                    "This Joker gains {C:mult}+#2#{} Mult",
                     "if played hand has",
                     "exactly {C:attention}4{} cards",
-                    "{C:inactive}(Currently {C:chips}#1#{C:inactive} Chips)",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                 },
             },
             j_seance={
@@ -689,7 +689,12 @@ return {
             madness_blue_stake_loc={
                 "Changes Blue Stake to remove hand size instead of discards.",
                 "Restart the game after changing this."
-            }
+            },
+            madness_speed_explain = {
+                "Runs the game update function",
+                "this many times a frame."
+            },
+            madness_game_speed="Raw Game Speed Multiplier"
         },
         v_dictionary = {
             a_discards="+#1# Discards",
@@ -706,10 +711,6 @@ return {
                 "as this uses a static approximation of",
                 "the inverse of the Blind scaling function."
             },
-            madness_blind_adjust_explain = {
-                "Raises all blind requirements to",
-                "the power of this value."
-            }
         }
     },
 }
