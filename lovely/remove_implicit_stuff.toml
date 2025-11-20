@@ -253,6 +253,15 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "card.lua"
+pattern = '''if self.ability.name == 'Hit the Road' and to_big(self.ability.x_mult) > to_big(1) then'''
+position = "at"
+payload = '''if false then'''
+times = 1
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
 pattern = '''elseif self.ability.name == 'Invisible Joker' then loc_vars = {self.ability.extra, self.ability.invis_rounds}'''
 position = "at"
 payload = '''elseif self.ability.name == 'Invisible Joker' then -- Removed by Madness'''

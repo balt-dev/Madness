@@ -19,17 +19,19 @@ Game.main_menu = function(change_context)
     newcard.T.h = newcard.T.h * 1.1 * 1.2
     newcard.states.visible = false
 
+    if not next(SMODS.find_mod("Cryptid")) then
         G.SPLASH_BACK:define_draw_steps({
-        {
-            shader = "splash",
-            send = {
-                { name = "time", ref_table = G.TIMERS, ref_value = "REAL_SHADER" },
-                { name = "vort_speed", val = 0.4 },
-                { name = "colour_1", ref_table = G.C, ref_value = "RED" },
-                { name = "colour_2", val = G.C.WHITE },
+            {
+                shader = "splash",
+                send = {
+                    { name = "time", ref_table = G.TIMERS, ref_value = "REAL_SHADER" },
+                    { name = "vort_speed", val = 0.4 },
+                    { name = "colour_1", ref_table = G.C, ref_value = "RED" },
+                    { name = "colour_2", val = G.C.WHITE },
+                },
             },
-        },
-    })
+        })
+    end
 
     G.E_MANAGER:add_event(Event({
         trigger = "after",
