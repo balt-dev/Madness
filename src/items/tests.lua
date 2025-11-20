@@ -1915,6 +1915,18 @@ Balatest.TestPlay {
 }
 
 Balatest.TestPlay {
+    name = "mail",
+    jokers = {"j_mail"},
+    execute = function()
+        G.GAME.current_round.mail_card = { id = 2, rank = '2', suit = 'Spades' }
+        Balatest.discard { "2S", "3S", "4S" }
+    end,
+    assert = function()
+        Balatest.assert_eq(G.GAME.dollars, 2)
+    end,
+}
+
+Balatest.TestPlay {
     name = "overscoring",
     jokers = { 'j_baron', 'j_mime' },
     hand_size = 10,

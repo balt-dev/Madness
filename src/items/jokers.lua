@@ -2364,19 +2364,10 @@ SMODS.Joker:take_ownership('stencil', {
 
 SMODS.Joker:take_ownership('mail', {
     calculate = function(self, card, context)
-        if context.discard and not context.other_card.debuff or context.forcetrigger and
+        if context.discard and not context.other_card.debuff and
             context.other_card:get_id() == G.GAME.current_round.mail_card.id then
-            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra
             return {
                 dollars = card.ability.extra,
-                func = function()
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            G.GAME.dollar_buffer = 0
-                            return true
-                        end
-                    }))
-                end
             }
         end
     end,
