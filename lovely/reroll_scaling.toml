@@ -6,17 +6,24 @@ priority = 0
 [patches.pattern]
 target = "functions/common_events.lua"
 pattern = "if not skip_increment then G.GAME.current_round.reroll_cost_increase = G.GAME.current_round.reroll_cost_increase + 1 end"
-position = "at"
+position = "before"
 payload = '''
-local context = { reroll_scaling = true, reroll_increase = 1 }
-
-for i, card in ipairs(G.jokers.cards) do
-    if not card.debuff then
-        eval_card(card, context)
-    end
+if next(SMODS.find_card("j_chaos", false)) then 
+    skip_increment = true
 end
+'''
+match_indent = true
+times = 1
 
-if not skip_increment then G.GAME.current_round.reroll_cost_increase = G.GAME.current_round.reroll_cost_increase + context.reroll_increase end
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Cryptid "lib/overrides.lua"]'
+pattern = "function calculate_reroll_cost(skip_increment)"
+position = "after"
+payload = '''
+if next(SMODS.find_card("j_chaos", false)) then 
+    skip_increment = true
+end
 '''
 match_indent = true
 times = 1

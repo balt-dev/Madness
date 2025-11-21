@@ -362,12 +362,7 @@ SMODS.Joker:take_ownership('raised_fist', {
 })
 
 SMODS.Joker:take_ownership('chaos', {
-	rarity = 3,
-	calculate = function(self, card, context)
-		if context.reroll_scaling and not card.debuff then
-			context.reroll_increase = 0
-		end
-	end
+	rarity = 3
 })
 
 SMODS.Joker:take_ownership('fibonacci', {

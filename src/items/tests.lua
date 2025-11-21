@@ -1302,6 +1302,28 @@ Balatest.TestPlay {
 }
 
 Balatest.TestPlay {
+    name = "chaos",
+    jokers = { 'j_chaos' },
+    hand_size = 5,
+    execute = function()
+        Balatest.end_round()
+        Balatest.cash_out()
+        ease_dollars(10)
+
+        Balatest.q(Event{func = function()
+            if G.STATE ~= G.STATES.SHOP then return false end
+            for i = 1, 10 do G.FUNCS.reroll_shop() end
+            return true
+        end})
+        Balatest.exit_shop()
+        Balatest.wait_for_input(G.GAME.BLIND_SELECT)
+    end,
+    assert = function()
+        Balatest.assert_eq(G.GAME.current_round.reroll_cost, 5)
+    end,
+}
+
+Balatest.TestPlay {
     name = "popcorn",
     jokers = {"j_popcorn"},
     execute = function()
