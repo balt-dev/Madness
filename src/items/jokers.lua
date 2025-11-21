@@ -1742,7 +1742,7 @@ SMODS.Joker:take_ownership('ramen', {
 
 SMODS.Joker:take_ownership('castle', {
     rarity = 1,
-    config = { extra = 5, h_chips = 0 },
+    config = { extra = 2, h_chips = 0 },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra, card.ability.h_chips } }
     end,
