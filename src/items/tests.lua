@@ -1949,6 +1949,18 @@ Balatest.TestPlay {
 }
 
 Balatest.TestPlay {
+    name = "smeared",
+    jokers = { 'j_smeared', 'j_four_fingers' },
+    blind = "bl_goad",
+    execute = function()
+        Balatest.play_hand { '2S', '3D', '4H', '5C' }
+    end,
+    assert = function()
+        Balatest.assert_chips((100 + (2 + 3 + 4 + 5)) * 8) -- Straight flush
+    end,
+}
+
+Balatest.TestPlay {
     name = "overscoring",
     jokers = { 'j_baron', 'j_mime' },
     hand_size = 10,

@@ -7,6 +7,6 @@
 	"main_file": "main.lua",
 	"badge_colour": "ff0000",
 	"badge_text_colour": "FFFFFF",
-	"version": "1.1.6",
+	"version": "1.2.0",
 	"priority": 3.8e308
 }

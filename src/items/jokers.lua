@@ -553,6 +553,7 @@ SMODS.Joker:take_ownership('business', {
 })
 
 SMODS.Joker:take_ownership('supernova', {
+    rarity = 2,
     loc_vars = function(self, info_queue, card)
         local mult = 0
         if  
@@ -1349,6 +1350,7 @@ SMODS.Joker:take_ownership('midas_mask', {
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds,
             'midas_mask')
+        table.insert(info_queue, G.P_CENTERS.m_gold )
         return { vars = { numerator, denominator } }
     end,
     calculate = function(self, card, context)
@@ -1947,7 +1949,9 @@ SMODS.Joker:take_ownership('certificate', {
 })
 
 SMODS.Joker:take_ownership('smeared', {
-    rarity = 3,
+    loc_vars = function(self, info_queue, card)
+        table.insert(info_queue, G.P_CENTERS.m_wild)
+    end,
     calculate = function(self, card, context)
         if context.setting_blind and
             context.blind.debuff and
@@ -1977,6 +1981,13 @@ SMODS.Joker:take_ownership('smeared', {
         end
     end
 })
+
+local SMODS_has_any_suit = SMODS.has_any_suit
+
+function SMODS.has_any_suit(...)
+    if next(SMODS.find_card("j_smeared")) then return true end
+    return SMODS_has_any_suit(...)
+end
 
 SMODS.Joker:take_ownership('throwback', {
     config = { extra = 0.75 },

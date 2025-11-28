@@ -527,8 +527,8 @@ return {
             j_smeared = {
                 name = "Smeared Joker",
                 text = {
-                    "Disables all",
-                    "{C:attention}suit-debuffing{}",
+                    "All cards are {C:attention}Wild Cards{}",
+                    "Disables all {C:attention}suit-debuffing{}",
                     "Boss Blinds"
                 },
                 unlock = {
