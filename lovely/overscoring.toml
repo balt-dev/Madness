@@ -125,3 +125,14 @@ payload = """
 """
 match_indent = true
 times = 3
+
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = """local amount = math.floor(a*(b+(k*c)^d)^c)"""
+position = "before"
+payload = """
+local a, b, c, d, k = to_big(a), to_big(b), to_big(c), to_big(d), to_big(k)
+"""
+match_indent = true
+times = 3

@@ -1,29 +1,17 @@
-local blind_amt = get_blind_amount
--- Patch to prevent shit breaking
-function get_blind_amount(ante)
-	if type(ante) == "table" and ante <= to_big(10) then
-		ante = ante:to_number()
-	end
-	return blind_amt(ante)
-end
+if not to_big then function to_big(x) return x end end
 
 local blind_amt = get_blind_amount
 MADNESS.orig_get_blind_amount = blind_amt
 function get_blind_amount(ante)
-	return blind_amt(ante + (G.GAME.overscoring_ante or 0))
+	return blind_amt(to_big(ante + (G.GAME.overscoring_ante or 0)))
 end
 
 function get_blind_amount(ante)
 	G.GAME.overscoring_ante = G.GAME.overscoring_ante or 0
 	local target_ante = ante + G.GAME.overscoring_ante
-	if type(target_ante) == "table" and target_ante < to_big(20) then
-		target_ante = target_ante:to_number()
-	end
 	local res = blind_amt(target_ante)
 	return res
 end
-
-if not to_big then function to_big(x) return x end end
 
 function get_inverse_blind_amount(raw_score)
 	raw_score = to_big(raw_score)
