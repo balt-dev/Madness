@@ -1,8 +1,11 @@
 local blind_amt = get_blind_amount
-MADNESS.orig_get_blind_amount = blind_amt
 function get_blind_amount(ante)
-	return blind_amt(to_big(ante + (G.GAME.overscoring_ante or 0)))
+	if to_big(ante) <= to_big(8) then ante = to_number(ante) end
+	return blind_amt(target_ante)
 end
+local blind_amt = get_blind_amount
+
+MADNESS.orig_get_blind_amount = blind_amt
 
 function get_blind_amount(ante)
 	G.GAME.overscoring_ante = G.GAME.overscoring_ante or 0
@@ -12,6 +15,7 @@ function get_blind_amount(ante)
 end
 
 function get_inverse_blind_amount(raw_score)
+	G.GAME.overscoring_ante = G.GAME.overscoring_ante or 0
 	raw_score = to_big(raw_score)
 	local score = to_big(raw_score) / to_big(blind_amt(8))
 	if score < to_big(1) then
