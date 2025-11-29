@@ -1030,7 +1030,7 @@ local madness_quips = {
     "fuck terfs all my homies hate terfs",
     "transmisogyny and transmisandry hurt everyone",
     "docta pebba",
-    "the creator of this mod has over {C:attention,s:0.75}$400{C:inactive,s:0.75} in rain world merch",
+    "the creator of this mod has over {C:money,s:0.75}$400{C:inactive,s:0.75} in rain world merch",
     "what do you MEAN 2017 was " .. tostring(math.floor((os.time() - 1514786399) / 31536000)) .. " years ago",
     "sudo rm -rf /boot",
     "eval {C:blue,s:0.75}G{C:inactive,s:0.75}.{C:blue,s:0.75}GAME{C:inactive,s:0.75}.{C:blue,s:0.75}dollars{C:inactive,s:0.75} = {C:attention,s:0.75}math{C:inactive,s:0.75}.{C:blue,s:0.75}huge",
