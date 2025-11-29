@@ -1,5 +1,3 @@
-if not to_big then function to_big(x) return x end end
-
 local blind_amt = get_blind_amount
 MADNESS.orig_get_blind_amount = blind_amt
 function get_blind_amount(ante)

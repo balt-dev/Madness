@@ -2281,7 +2281,7 @@ SMODS.Joker:take_ownership('drivers_license', {
 })
 
 local rep_hand_calc = function(self, card, context)
-    if context.repetition and context.cardarea == G.play and context.scoring_name == card.ability.extra.type then
+    if context.repetition and (context.cardarea == G.play or context.cardarea == G.hand) and context.scoring_name == card.ability.extra.type then
         return { repetitions = 1 }
     end
 end
