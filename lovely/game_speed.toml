@@ -5,8 +5,8 @@ priority = -2147483648
 [[patches]]
 [patches.pattern]
 target = "main.lua"
-pattern = """if love.timer then dt = love.timer.step() end"""
-position = "after"
+pattern = """function love.run()"""
+position = "before"
 payload = """
 local updates = 0
 """

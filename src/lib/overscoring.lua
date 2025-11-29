@@ -1,7 +1,7 @@
 local blind_amt = get_blind_amount
 function get_blind_amount(ante)
 	if to_big(ante) <= to_big(8) then ante = to_number(ante) end
-	return blind_amt(target_ante)
+	return blind_amt(ante)
 end
 local blind_amt = get_blind_amount
 
