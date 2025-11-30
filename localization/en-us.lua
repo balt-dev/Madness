@@ -98,8 +98,8 @@ return {
             j_chaos={
                 name="Chaos the Clown",
                 text={
-                    "{C:green}Rerolls{} no longer",
-                    "scale their {C:attention}cost"
+                    "{C:green}Rerolls{} scale their",
+                    "cost by {C:money}$#1#{}"
                 },
             },
             j_fibonacci={

@@ -361,10 +361,6 @@ SMODS.Joker:take_ownership('raised_fist', {
     end
 })
 
-SMODS.Joker:take_ownership('chaos', {
-	rarity = 3
-})
-
 SMODS.Joker:take_ownership('fibonacci', {
     config = { extra = { odds = 2 } },
 	loc_vars = function(self, info_queue, card)
@@ -515,11 +511,21 @@ SMODS.Joker:take_ownership('odd_todd', {
 
 SMODS.Joker:take_ownership('chaos', {
 	rarity = 3,
+    config = { extra = 0.25 },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra } }
+    end,
 	calculate = function(self, card, context)
 		if context.reroll_scaling then
-			context.reroll_increase = 0
+			context.reroll_increase = card.ability.extra
 		end
-	end
+	end,
+    add_to_deck = function(self, card, from_debuff)
+        G.GAME.modifiers.cry_reroll_scaling = card.ability.extra
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.GAME.modifiers.cry_reroll_scaling = nil
+    end
 })
 
 SMODS.Joker:take_ownership('scholar', {
