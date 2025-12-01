@@ -1319,7 +1319,7 @@ Balatest.TestPlay {
         Balatest.wait_for_input(G.GAME.BLIND_SELECT)
     end,
     assert = function()
-        Balatest.assert_eq(G.GAME.current_round.reroll_cost, 5)
+        Balatest.assert_eq(G.GAME.current_round.reroll_cost, 5 + (0.25 * 10))
     end,
 }
 

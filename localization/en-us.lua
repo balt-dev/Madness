@@ -690,11 +690,6 @@ return {
                 "Changes Blue Stake to remove hand size instead of discards.",
                 "Restart the game after changing this."
             },
-            madness_speed_explain = {
-                "Runs the game update function",
-                "this many times a frame."
-            },
-            madness_game_speed="Raw Game Speed Multiplier"
         },
         v_dictionary = {
             a_discards="+#1# Discards",
