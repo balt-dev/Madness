@@ -430,7 +430,7 @@ SMODS.Joker:take_ownership('abstract', {
 })
 
 SMODS.Joker:take_ownership('delayed_grat', {
-    config = { extra = 7 },
+    config = { extra = 5 },
 })
 
 SMODS.Joker:take_ownership('hack', {
@@ -1474,12 +1474,14 @@ SMODS.Joker:take_ownership('reserved_parking', {
 })
 
 SMODS.Joker:take_ownership('to_the_moon', {
-    config = { extra = { dollars = 1, per = 5 } },
+    config = { extra = { dollars = 1, per = 7 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.dollars, card.ability.extra.per, card.ability.extra.dollars * math.floor(G.GAME.dollars / card.ability.extra.per) } }
+        local amount = card.ability.extra.dollars * math.floor(math.max(G.GAME.dollars - G.GAME.interest_cap, 0) / card.ability.extra.per)
+        return { vars = { card.ability.extra.dollars, card.ability.extra.per, amount } }
     end,
     calc_dollar_bonus = function(self, card)
-        return card.ability.extra.dollars * math.floor(G.GAME.dollars / card.ability.extra.per)
+        local amount = card.ability.extra.dollars * math.floor(math.max(G.GAME.dollars - G.GAME.interest_cap, 0) / card.ability.extra.per)
+        return amount
     end
 })
 
@@ -1955,6 +1957,7 @@ SMODS.Joker:take_ownership('certificate', {
 })
 
 SMODS.Joker:take_ownership('smeared', {
+    rarity = 3,
     loc_vars = function(self, info_queue, card)
         table.insert(info_queue, G.P_CENTERS.m_wild)
     end,
@@ -2524,7 +2527,7 @@ SMODS.Joker:take_ownership('trading', {
 }, true)
 
 SMODS.Joker:take_ownership('wee', {
-    config = { extra = { chips = 0, chip_mod = 20 } },
+    config = { extra = { chips = 0, chip_mod = 12 } },
     calculate = function(self, card, context)
         if context.joker_main then
             return {
@@ -2569,3 +2572,21 @@ SMODS.Joker:take_ownership('astronomer', {
         }))
     end
 }, true)
+
+SMODS.Joker:take_ownership('shoot_the_moon', {
+    config = { extra = 1.1 },
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.hand and not context.end_of_round and context.other_card:get_id() == 12 then
+            if context.other_card.debuff then
+                return {
+                    message = localize('k_debuffed'),
+                    colour = G.C.RED
+                }
+            else
+                return {
+                    x_mult = card.ability.extra
+                }
+            end
+        end
+    end,
+})
